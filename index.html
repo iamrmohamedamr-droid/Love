@@ -183,6 +183,14 @@ textarea{min-height:120px;resize:vertical;line-height:1.9}
       <input type="file" id="fileInput" accept="image/*" multiple hidden>
       <div class="thumbs" id="thumbs"></div>
 
+      <label style="margin-top:26px">✨ أو أضف الصور كروابط خارجية — رابط الهدية هيبقى خفيف جدًا</label>
+      <div style="display:flex;gap:10px">
+        <input type="text" id="extUrl" placeholder="https://....jpg أو اسم-ملف.jpg" style="flex:1">
+        <button class="btn" id="addUrlBtn" style="width:auto;margin:0;padding:12px 22px;font-size:15px">+ إضافة</button>
+      </div>
+      <p class="note">الطريقة: ارفع الصور على <b>postimages.org</b> (من غير تسجيل خالص) وخد "Direct link" وحطه هنا.<br>
+      أو لو رافع ملفاتك على Netlify: حط الصور في نفس المجلد جنب index.html واكتب اسم الملف بس زي <span dir="ltr">pic1.jpg</span></p>
+
       <label>ستايل الصفحة</label>
       <div class="themes" id="themes">
         <div class="theme sel" data-t="rose" style="background:linear-gradient(135deg,#3a1024,#1a0f1e);color:#ffb3c9">وردي ملكي<small>رومانسي ودافئ</small></div>
@@ -463,6 +471,15 @@ function setupBuild(){
     };
   });
   $('genBtn').onclick=generate;
+  const addUrl=()=>{
+    const v=$('extUrl').value.trim();
+    if(!v) return;
+    if(photos.length>=12){ toast('أقصى عدد 12 صورة'); return; }
+    if(!/^(https?:\/\/|\.?[\w-]+\.\w{2,4})/i.test(v)){ toast('الرابط مش صحيح'); return; }
+    photos.push(v); $('extUrl').value=''; renderThumbs(); toast('تمت إضافة الصورة');
+  };
+  $('addUrlBtn').onclick=addUrl;
+  $('extUrl').addEventListener('keydown',e=>{ if(e.key==='Enter') addUrl(); });
   $('copyBtn').onclick=async ()=>{
     await navigator.clipboard.writeText($('linkOut').value).catch(()=>{$('linkOut').select();document.execCommand('copy');});
     toast('تم نسخ الرابط بنجاح');
@@ -473,7 +490,7 @@ async function handleFiles(files){
   for(const f of [...files]){
     if(!f.type.startsWith('image/')) continue;
     if(photos.length>=6){ toast('أقصى عدد 6 صور'); break; }
-    photos.push({dataUrl: await compress(f)});
+    photos.push(await compress(f));
   }
   renderThumbs();
 }
@@ -495,7 +512,7 @@ function renderThumbs(){
   const th=$('thumbs'); th.innerHTML='';
   photos.forEach((p,i)=>{
     const d=document.createElement('div'); d.className='t';
-    const im=document.createElement('img'); im.src=p.dataUrl;
+    const im=document.createElement('img'); im.src=p;
     const x=document.createElement('button'); x.className='x'; x.textContent='✕';
     x.onclick=()=>{photos.splice(i,1);renderThumbs();};
     d.append(im,x); th.appendChild(d);
@@ -506,12 +523,16 @@ async function generate(){
   if(!to && !msg && !photos.length){ toast('املأ اسم الهدية أو الرسالة أو أضف صورة على الأقل'); return; }
   const btn=$('genBtn'); btn.disabled=true; btn.textContent='جاري تجهيز الهدية...';
   await new Promise(r=>setTimeout(r,50));
-  const data={to,from,msg,theme,imgs:photos.map(p=>p.dataUrl),
+  const data={to,from,msg,theme,imgs:photos,
     openAt: $('openAt').value || null,
     music: $('musicChk').checked};
   const url=(location.protocol==='file:')
     ? location.href.split('#')[0].split('?')[0]+'#d='+encodeData(data)
     : location.origin+location.pathname+'#d='+encodeData(data);
+  if(url.length>4000){
+    toast('⚠️ الرابط طويل — استخدم روابط خارجية للصور');
+    $('linkBox').querySelector('.note').innerHTML='⚠️ الرابط طويل ('+Math.round(url.length/1024)+'KB) وممكن يتقطع في واتساب.<br>للحصول على رابط خفيف: امسح الصور المرفوعة وأضفها كروابط خارجية من postimages.org.';
+  }
   $('linkOut').value=url;
   $('linkBox').style.display='block';
   btn.disabled=false; btn.textContent='توليد رابط الهدية';
