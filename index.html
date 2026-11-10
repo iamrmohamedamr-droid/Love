@@ -25,7 +25,6 @@ body{
 
 #coverStage{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:26px}
 
-/* Envelope Cover Design */
 .envelope-wrap{position:relative;width:min(280px,75vw);cursor:pointer;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(0 20px 40px rgba(0,0,0,.5))}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
 .envelope{background:#e8d3cb;border-radius:16px;padding:30px 20px;box-shadow:0 15px 35px rgba(0,0,0,.3);position:relative;text-align:center;border:2px solid #d4b8ad}
@@ -54,35 +53,29 @@ body{
 
 .sub-hbd{font-size:15px;color:#f5e9f2;margin-top:6px;margin-bottom:20px;font-weight:500}
 
-/* Header Mini Photos Preview */
 .cover-pics-preview{display:flex;justify-content:center;gap:12px;margin:20px 0 30px}
 .mini-polaroid{background:#fff;padding:6px 6px 24px 6px;border-radius:4px;width:110px;box-shadow:0 8px 20px rgba(0,0,0,.4);transform:rotate(-3deg)}
 .mini-polaroid:nth-child(2){transform:rotate(3deg)}
 .mini-polaroid img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 
-/* Vintage Letter Box */
 .letter-box{background:#fdfbf7;color:#2c2421;border-radius:12px;padding:30px 20px;margin:25px 0;box-shadow:0 15px 40px rgba(0,0,0,.4);position:relative;border:2px solid #e3d5c6}
 .letter-box::before{content:'';position:absolute;inset:6px;border:1px dashed #d1c2b0;border-radius:8px;pointer-events:none}
 .letter-title{font-family:'Marhey',cursive;font-size:18px;color:#5a3e36;margin-bottom:14px}
-.msg{font-family:'Amiri',serif;font-size:19px;line-height:2;white-space:pre-wrap;text-align:right}
+.msg{font-family:'Amiri',serif;font-size:19px;line-height:2;white-space:pre-wrap;text-align:right;min-height:40px;}
 .cursor{display:inline-block;width:2px;height:1em;background:#5a3e36;vertical-align:-0.1em;animation:blink 1s steps(1) infinite;margin-inline-start:2px}
 @keyframes blink{50%{opacity:0}}
 
-/* Video Section */
 .video-section{margin:30px 0;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 10px 30px rgba(0,0,0,.5);border:1px solid rgba(232,196,124,.3)}
-.video-section video{width:100%;display:block;max-height:350px;object-fit:cover}
+.video-section video, .video-section iframe{width:100%;display:block;aspect-ratio:16/9;border:none;}
 
-/* Gallery Wall (Polaroids) */
 .section-title{font-family:'Marhey',cursive;font-size:20px;color:var(--gold2);margin:40px 0 20px}
 .gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
-.pframe{position:relative;width:150px;background:#fff;padding:8px 8px 26px 8px;border-radius:3px;
+.pframe{position:relative;width:140px;background:#fff;padding:8px 8px 26px 8px;border-radius:3px;
   box-shadow:0 12px 30px rgba(0,0,0,.4);cursor:pointer;
   transform:rotate(var(--rot,0deg));transition:transform .3s, box-shadow .3s}
 .pframe:hover{transform:rotate(0deg) scale(1.05)!important;z-index:5}
 .pframe img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
 .pframe .tape{position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg);width:55px;height:18px;background:rgba(247,227,176,.85);box-shadow:0 2px 5px rgba(0,0,0,.2);border-radius:1px}
-
-.action-btn-mid{margin:25px auto 10px;display:inline-block;padding:10px 24px;border-radius:20px;border:1px solid rgba(232,196,124,.4);background:rgba(232,196,124,.08);color:var(--gold2);font-family:'Tajawal';font-weight:700;font-size:14px;cursor:pointer}
 
 .from{margin-top:35px;font-size:18px;color:#cbb3d6}
 .from b{color:var(--gold2);font-size:20px}
@@ -98,7 +91,6 @@ body{
 @keyframes floatUp{to{transform:translateY(-115vh) rotate(340deg);opacity:0}}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 
-/* Build Page Styles */
 #buildStage{display:none;text-align:right}
 .card{background:rgba(255,255,255,.05);border:1px solid rgba(232,196,124,.25);border-radius:20px;padding:24px;backdrop-filter:blur(10px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
 .card h1{text-align:center;font-family:'Marhey',cursive;font-size:26px;background:linear-gradient(90deg,var(--gold2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
@@ -133,7 +125,6 @@ textarea{min-height:100px;resize:vertical;line-height:1.7}
 <button class="musicBtn" id="musicBtn" title="الموسيقى">🎵</button>
 
 <div class="wrap">
-  <!-- BUILD STAGE -->
   <div id="buildStage">
     <div class="card">
       <h1>صانع الهدايا</h1>
@@ -148,8 +139,8 @@ textarea{min-height:100px;resize:vertical;line-height:1.7}
       <label>رسالة المناسبة (مثال: HAPPY BIRTHDAY, LOVE)</label>
       <input type="text" id="subHbd" placeholder="HAPPY BIRTHDAY, LOVE">
 
-      <label>رابط فيديو (اختياري - مثل يوتيوب أو فيديو مباشر)</label>
-      <input type="text" id="videoUrl" placeholder="https://...mp4 أو رابط يوتيوب">
+      <label>رابط فيديو (اختياري - يوتيوب أو فيديو مباشر)</label>
+      <input type="text" id="videoUrl" placeholder="https://youtube.com/watch?v=... أو رابط mp4">
 
       <label>رسالتك الحلوة الطويلة داخل الظرف/الورقة</label>
       <textarea id="msg" placeholder="اكتب رسالتك هنا..."></textarea>
@@ -157,12 +148,12 @@ textarea{min-height:100px;resize:vertical;line-height:1.7}
       <label>من (اسمك)</label>
       <input type="text" id="fromName" placeholder="أحمد">
 
-      <label>صور الهدية (أول صورتين ستظهران أعلى الصفحة كبروازين)</label>
+      <label>صور الهدية (أول صورتين ستظهران أعلى الصفحة)</label>
       <div class="drop" id="drop">اسحب الصور هنا أو <b>اضغط للاختيار</b></div>
       <input type="file" id="fileInput" accept="image/*" multiple hidden>
       <div class="thumbs" id="thumbs"></div>
 
-      <label style="margin-top:20px">أو أضف صوراً بروابط خارجية</label>
+      <label style="margin-top:20px">أو أضف صوراً بروابط خارجية (مُفضل جداً لـ Vercel)</label>
       <div style="display:flex;gap:8px">
         <input type="text" id="extUrl" placeholder="https://...jpg" style="flex:1">
         <button class="btn" id="addUrlBtn" style="width:auto;margin:0;padding:10px 18px;font-size:14px">+ إضافة</button>
@@ -187,13 +178,13 @@ textarea{min-height:100px;resize:vertical;line-height:1.7}
         <input type="text" id="linkOut" readonly onclick="this.select()">
         <div class="row">
           <button class="btn" id="copyBtn">نسخ الرابط</button>
-          <button class="btn" id="openBtn" style="background:linear-gradient(135deg,#ff87ab,#e63973);color:#fff">معاينة الهدية</button>
+          <button class="btn" id="openBtn" style="background:linear-gradient(135deg,#ff87ab,#e63973);color:#fff">معاينة</button>
         </div>
+        <p class="note" id="linkNote">جاري الحساب...</p>
       </div>
     </div>
   </div>
 
-  <!-- COVER STAGE -->
   <div id="coverStage" style="display:none">
     <div class="envelope-wrap" id="giftbox">
       <div class="envelope">
@@ -214,28 +205,19 @@ textarea{min-height:100px;resize:vertical;line-height:1.7}
     </div>
   </div>
 
-  <!-- REVEAL STAGE -->
   <div id="revealStage">
     <div class="top-header" id="topHeaderOut">TO THE MOST BEAUTIFUL GIRL!</div>
     <div class="nameLine" id="nameLine"></div>
     <div class="sub-hbd" id="subHbdOut">HAPPY BIRTHDAY, LOVE</div>
-
-    <!-- Top Polaroids Preview (First 2 images) -->
     <div class="cover-pics-preview" id="topPolaroids"></div>
 
-    <!-- Letter Box -->
     <div class="letter-box">
       <div class="letter-title">رسالة خاصة لك 🤍</div>
       <div class="msg"><span id="msgText"></span><span class="cursor" id="cursor"></span></div>
     </div>
 
-    <!-- Video Section -->
-    <div class="video-section" id="videoBox" style="display:none">
-      <video id="mainVideo" controls playsinline></video>
-    </div>
-
-    <!-- Gallery Wall -->
-    <div class="section-title">الصور المفضلة لك 📸</div>
+    <div class="video-section" id="videoBox" style="display:none"></div>
+    <div class="section-title" id="galleryTitle">الصور المفضلة لك 📸</div>
     <div class="gallery" id="gallery"></div>
 
     <div class="from" id="fromLine"></div>
@@ -273,6 +255,14 @@ function decodeData(s){
   }catch(e){ return null; }
 }
 function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+// تحويل روابط يوتيوب لصيغة Embed
+function getYoutubeEmbed(url) {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+}
 
 (function(){
   const st = $('stars');
@@ -364,7 +354,6 @@ function reveal(d){
   if(d.subHbd) $('subHbdOut').textContent = d.subHbd;
   if(d.from) $('fromLine').innerHTML = 'من قلب: <b>' + esc(d.from) + '</b>';
 
-  // Top Polaroids (First 2)
   if(d.imgs && d.imgs.length){
     const tp = $('topPolaroids');
     d.imgs.slice(0, 2).forEach(src=>{
@@ -372,13 +361,13 @@ function reveal(d){
       pol.className = 'mini-polaroid';
       const im = document.createElement('img');
       im.src = src;
+      im.onerror = ()=> { pol.style.display = 'none'; };
       pol.appendChild(im);
       tp.appendChild(pol);
     });
   }
 
-  // Typing Message
-  const txt = d.msg || '';
+  const txt = d.msg || '...';
   const el = $('msgText');
   let i = 0;
   (function type(){
@@ -389,13 +378,18 @@ function reveal(d){
     }
   })();
 
-  // Video
+  // معالجة الفيديو
   if(d.videoUrl){
     $('videoBox').style.display='block';
-    $('mainVideo').src = d.videoUrl;
+    const ytUrl = getYoutubeEmbed(d.videoUrl);
+    if (ytUrl) {
+      $('videoBox').innerHTML = `<iframe src="${ytUrl}" allowfullscreen></iframe>`;
+    } else {
+      $('videoBox').innerHTML = `<video src="${d.videoUrl}" controls playsinline></video>`;
+    }
   }
 
-  // Gallery
+  // معرض الصور
   const rots = [-3, 2.5, -1.5, 3, -2, 1.5];
   if(d.imgs && d.imgs.length){
     const g = $('gallery');
@@ -405,6 +399,7 @@ function reveal(d){
       fr.style.setProperty('--rot', rots[idx%6]+'deg');
       const im = document.createElement('img');
       im.src = src; im.alt='صورة';
+      im.onerror = ()=> { fr.style.display = 'none'; };
       im.addEventListener('click', ()=>{ $('lbImg').src=src; $('lightbox').style.display='flex'; });
       const tape = document.createElement('div');
       tape.className='tape';
@@ -524,26 +519,42 @@ async function generate(){
   const topHeader=$('topHeader').value.trim(), to=$('toName').value.trim(), subHbd=$('subHbd').value.trim();
   const from=$('fromName').value.trim(), msg=$('msg').value.trim(), videoUrl=$('videoUrl').value.trim();
   
+  const btn = $('genBtn'); btn.disabled = true; btn.textContent = 'جاري التجهيز...';
+
   const data={
     topHeader, to, subHbd, from, msg, videoUrl, theme,
     imgs: photos.filter(Boolean),
     openAt: $('openAt').value || null,
     music: $('musicChk').checked
   };
-  const encoded = encodeData(data);
-  const base = location.protocol==='file:'
-    ? location.href.split('#')[0].split('?')[0]
-    : location.origin+location.pathname;
-  const url = base+'#d='+encoded;
+  
+  try {
+    const encoded = encodeData(data);
+    const base = location.protocol==='file:'
+      ? location.href.split('#')[0].split('?')[0]
+      : location.origin+location.pathname;
+    const url = base+'#d='+encoded;
 
-  const sizeKB = Math.round(url.length/1024*10)/10;
-  const note = $('linkBox').querySelector('.note');
-  note.innerHTML = `حجم الرابط: ${sizeKB}KB — ${photos.length} صورة.`;
+    const sizeKB = Math.round(url.length/1024*10)/10;
+    const note = $('linkNote');
+    if (url.length > 3500) {
+       note.innerHTML = `⚠️ الرابط طويل (${sizeKB}KB) وممكن يتقطع في واتساب. الأفضل ترفع الصور على postimages.org وتستخدم روابط خارجية.`;
+       note.style.color = '#ffb3c9';
+    } else {
+       note.innerHTML = `حجم الرابط: ${sizeKB}KB — يحتوي على ${photos.length} صورة.`;
+       note.style.color = '#b39cc0';
+    }
 
-  $('linkOut').value=url;
-  $('linkBox').style.display='block';
-  toast('الرابط جاهز! 🎉');
-  $('linkBox').scrollIntoView({behavior:'smooth'});
+    $('linkOut').value=url;
+    $('linkBox').style.display='block';
+    toast('الرابط جاهز! 🎉');
+    $('linkBox').scrollIntoView({behavior:'smooth'});
+  } catch (err) {
+    toast('حدث خطأ أثناء توليد الرابط');
+    console.error(err);
+  } finally {
+    btn.disabled = false; btn.textContent = 'توليد رابط الهدية';
+  }
 }
 let toastT;
 function toast(m){
